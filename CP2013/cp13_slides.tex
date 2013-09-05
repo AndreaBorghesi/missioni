@@ -1,0 +1,237 @@
+%Andrea Borghesi
+%Università degli studi di Bologna
+
+% CP2013 presentation
+\documentclass{beamer}
+\usetheme{Dresden}
+
+\usecolortheme[rgb={0,0.5,0}]{structure}
+
+
+\usepackage[italian]{babel}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[font={small}]{caption}
+\usepackage{eurosym}
+\usepackage{hyphenat}
+
+%cartelle contenenti le immagini
+\graphicspath{{/media/sda4/missioni/CP2013/immagini/}}
+
+\newcommand{\clpr}{CLP({\ensuremath{\cal R}})}
+
+\title{Policy model learning for planning and incentive design in the energy setting}
+\author[]{\underline{Andrea Borghesi}\inst{1} \and Marco Gavanelli\inst{2} \and  Michela Milano\inst{1}}
+
+\institute[]{DISI, University of Bologna, Italy
+\and
+        ENDIF, University of Ferrara, Italy
+}
+\date{}
+
+\setbeamercolor{itemize subitem}{fg=orange} % cambia colore elementi sotto-liste
+\setbeamercolor{block body}{bg=yellow!20,fg=black}
+%\captionsetup[subfigure]{font=small,labelfont=small}
+
+
+\begin{document}
+
+	\begin{frame}[plain]
+		\titlepage
+	\end{frame}
+	
+
+\section*{Outline}
+\begin{frame}
+	\tableofcontents
+\end{frame}
+
+
+\section{Introduction}
+
+	\begin{frame}
+	\frametitle{ePolicy Project}
+		\begin{columns}
+			\column{.5\textwidth}
+			\begin{itemize}
+				\item FP7 STREP Project funded under ICT tools for Governance and Policy Modeling.
+				\item AIM: provide decision support systems for policy makers.
+				\item Case study: Emilia-Romagna regional Energy Plan.
+				% \item<1-| alert@2> Case study: Emilia-Romagna regional Energy Plan.
+			\end{itemize}
+			\column{.5\textwidth}
+			\begin{figure}[hbt]
+				\centering
+				\includegraphics[scale=0.3]{italyMap}
+				\label{italyMap}
+			\end{figure}
+		\end{columns}
+ 	\end{frame}
+ 	
+ 	\begin{frame}
+	\frametitle{Policy Making Process}
+		\begin{itemize}
+			\item Public policy issues are extremely complex, occur in rapidly changing environments and involve conflicts among different interests.
+			\item Policy making in the energy sector accounts electric and thermal energy production, energy efficiency, transports.			
+			\item Energy policies strongly affect economic development sustainability and social acceptance.	
+ 			\item Increasing attention given to sustainable energy policies.
+		\end{itemize}
+ 	\end{frame}
+ 	
+ 	\begin{frame}
+	\frametitle{Energy Policies}
+		\begin{itemize}
+			\item EU 20-20-20 initiative
+			\begin{itemize}
+				\item 20\% reduction of $CO_2$ emissions (w.r.t. 1990 levels)
+				\item 20\% of energy produced by renewable sources
+				\item 20\% increase of energy efficiency (w.r.t. 1990 levels) 
+			\end{itemize}
+			\item It should be perceived, and thus enforced, by	national and regional energy policies.
+		\end{itemize}
+ 	\end{frame}
+ 	
+\section{Policy making process}
+	\begin{frame}
+	\frametitle{Policy Making Cycle}
+		\begin{columns}
+			\column{.5\textwidth}
+			\begin{itemize}
+				\item Four steps in the policy making process: 
+				\begin{itemize}
+					\item Traditionally performed in sequence
+					\item An integrated ICT tool for supporting the overall process is missing   
+				\end{itemize}
+				\item Focus on Planning and Implementation
+			\end{itemize}
+			\column{.5\textwidth}
+			\begin{figure}[hbt]
+				\centering
+				\includegraphics[scale=0.35]{policyLifeCycle}
+				\label{epolicyLifeCycle}
+			\end{figure}
+		\end{columns}
+ 	\end{frame}
+ 	
+\subsection{Planning phase}
+	\begin{frame}
+	\frametitle{Planning phase}
+			\begin{itemize}
+			\item In the planning step, strategic objectives are set, budget constraints are defined, geophysical constraints are considered.
+			\item The policy makers should define the amount of planned activities.
+			\begin{itemize}
+				\item Primary activities: energy plants (PV, biomasses, fossil fuels plants..)
+				\item Secondary activities: infrastructures (roads, power lines..)
+			\end{itemize}
+			\item Both type of activities have impacts on the environment and costs.
+			\item Building a plan means solving an optimization problem, satisfying constraints on impacts, costs, etc.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+	\frametitle{Regional Planning with \clpr}
+		\begin{itemize}
+			\item Activities are decision vars with bounds: $ \forall i, L_i \leq a_i \leq U_i $
+			\item Activities have a cost $c$ constrained by a budget $$ \sum_i c_i a_i \leq B $$
+			\item Primary activities should produce a minimum amount of energy $$ \sum_{i \in A^P} e_i a_i \geq E_{plan}$$
+			\item In order to implements primary ones, other activities are necessary $$ \forall j \in A^S, a_j = \sum_{i \in A^P} d_{ij} a_i  $$
+			\begin{itemize}
+				\item secondary activities may also have impact on the environment!
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+
+
+\subsection{Implementation phase}
+	\begin{frame}
+	\frametitle{Implementation phase}
+		\begin{itemize}
+			\item After the planning policy makers should transform plans into actions.
+			\item We focus on renewable energy policies, in particular the photovoltaic (PV) case.
+			\item Many instruments to implement a policy; in the energy case we have, to name a few:
+			\begin{itemize}
+				\item<1-| alert@2> Feed-in tariffs 
+				\item<1-| alert@3> Grants
+				\item<1-| alert@3> Fiscal incentives
+				\item<1-| alert@3> Low interests/guaranteed loans
+				\item<1-> Tax exemptions
+				\item<1-> Green Certificate
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+	\frametitle{Implementation phase - Enforcing the policy}
+		\begin{itemize}
+		\item Which instrument should we use and in which amount to achieve the planned (regional) objective?
+			\begin{itemize}
+				\item Each instrument has a cost
+				\item The plants are installed by citizens and enterprises.
+			\end{itemize}
+		\item We need to understand the \emph{social reaction} to policy instruments
+		\end{itemize}
+		\begin{block}<2->{Multi-agent simulation}
+		Agent-based economic and social simulation aids the policy maker to evaluate the best implementation strategies 
+		\begin{itemize}
+			\item Case study: Installed power from PV plants in Emilia-Romagna Region 
+		\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}
+	\frametitle{Simulation}
+			\centering
+			\includegraphics[scale=0.5]{simulatorScheme}
+			\begin{block}{}
+				Given a possible policy implementation (e.g., how much money we should allocate to each of the possible subsidies), the result of the simulation will be the amount of energy by renewable sources due to the new policy.
+			\end{block}
+	\end{frame}
+	
+	\begin{frame}
+	\frametitle{Incentives behaviour}
+		\begin{columns}[t]
+			\column{.5\textwidth}
+			\centering
+			\includegraphics[width=.8\columnwidth,height=3.5cm]{InvestGrantLearnedFunction}\\		
+			\includegraphics[width=.8\columnwidth,height=3.5cm]{InterestFundLearnedFunction}
+			\column{.5\textwidth}
+			\centering
+			\includegraphics[width=.8\columnwidth,height=3.5cm]{FiscalIncLearnedFunction}\\
+			\includegraphics[width=.8\columnwidth,height=3.5cm]{GuaranteeFundLearnedFunction}
+		\end{columns}
+	\end{frame}
+	
+\section{Components Integration}
+	
+	\begin{frame}
+	\frametitle{Integration of the decision making and simulation component}
+		\begin{itemize}
+			\item We can integrate these components in different ways:
+			\begin{itemize}
+				\item<1-> Weak integration $ \rightarrow $ generate and test
+				\item<1-| alert@2> Learning based integration
+				\item<1-> Decomposition based integration 
+			\end{itemize}
+			\item An abstraction step is needed
+			\item We should define an interaction mechanism.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+	\frametitle{Learning based integration}
+		\begin{columns}
+			\column{.4\textwidth}
+			\begin{itemize}
+				\item We extract from the simulation results the relationships we need (i.e. between funding to incentives and PV power installed).
+				\item We create new constraints from these relationships and add them add to our CP model.
+			\end{itemize}
+			\column{.6\textwidth}
+			\centering
+			\includegraphics[scale=0.3]{learningBasedIter}
+		\end{columns}
+	\end{frame}
+
+\end{document}
