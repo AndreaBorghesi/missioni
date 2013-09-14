@@ -7,8 +7,6 @@
 
 \usecolortheme[rgb={0,0.5,0}]{structure}
 
-
-\usepackage[italian]{babel}
 \usepackage{indentfirst}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -205,7 +203,7 @@
 	\end{frame}
 	
 \section{Components Integration}
-	
+
 	\begin{frame}
 	\frametitle{Integration of the decision making and simulation component}
 		\begin{itemize}
@@ -233,5 +231,110 @@
 			\includegraphics[scale=0.3]{learningBasedIter}
 		\end{columns}
 	\end{frame}
+	
+\subsection{Integration practical aspects}
+
+	\begin{frame}
+	\frametitle{Linear approximation}
+		\begin{itemize}
+			\item The relationships we want to insert into our model are not linear
+			\item But the model hardly handles non-linear constraints $ \rightarrow $ \emph{Linearization}
+		\end{itemize}
+		\begin{columns}
+		\column{.4\textwidth}
+			\begin{block}{Piecewise Linear Approximation}
+				 A mean to approximate with accuracy a non-linear function through a set of linear equations
+			\end{block}
+		\column{.6\textwidth}
+		\centering
+		\includegraphics[width=0.7\columnwidth]{incComparePiecewise}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+	\frametitle{Extended CP model}
+		\begin{itemize}
+			\item We added 4 variables for the types of regional incentives, $Fund_j$, and 4 which represent outcome of energy related to each incentive, $Out_j$ 
+			\begin{itemize}
+				\item $ Fund_j $ and $ Out_j $ are related through auxiliary variables and sampling points taken from the piecewise linearized relationships
+			\end{itemize}
+			\item The sum of each incentive funding needs to be smaller than the budget allocated to the subsidies by the Region: $ \sum_{j=1}^4 Fund_j \leq BUDGET_{PV} $
+			\item The objective function is to maximise the outcome of energy, assigning the funds in the most efficient way: $ \max ( \sum_{j=1}^4 Out_j ) $
+		\end{itemize}	
+	\end{frame}
+
+\subsection{Integration results}
+	\begin{frame}
+	\frametitle{Integration of CP together with simulation}
+		\begin{itemize}
+			\item We have considered 4 types of regional incentives: investment grants, interest fund, fiscal incentives and guarantee fund
+			\item For different amounts of available regional budget the goal is to maximise the production of energy from PV panels
+			\item The best funds distribution is obtained through the interaction previously described.
+			\begin{itemize}
+				\item The energy outcome increase reported in the  tables is estimated comparing the case of absence of regional subsidies		
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+	\frametitle{Funds allocation results}
+			\begin{table}
+				\caption{Funds Allocation - \only<1>{\euro5M} \only<2>{\euro20M}}
+				\begin{tabular}{ p{0.3\columnwidth}  | p{0.3\columnwidth} | p{0.3\columnwidth}  }
+					\hline \hline 
+					\nohyphens{\emph{Incentive}} & \nohyphens{\emph{Funding (M\euro)}} & \nohyphens{\emph{Energy Outcome Increase(MW)}} \\ 
+					\hline
+					\only<1>{
+					Investment Grant &  0.00 & 0.000 \\ 
+					Interest Fund & 2.53 & 3.606 \\ 
+					Fiscal Incentives & 1.00 & 0.286 \\ 
+					Guarantee Fund & 1.00 & 0.170 \\ \hline 
+					Total & 5.00 & 4.121 \\
+					[-\normalbaselineskip]
+					}
+					\only<2>{
+					Investment Grant &  1.00 & 0.125 \\ 
+					Interest Fund & 2.53 & 3.606 \\ 
+					Fiscal Incentives & 2.73 & 0.458 \\ 
+					Guarantee Fund & 13.74 & 1.734 \\ \hline 
+					Total & 20.00 & 5.923 \\
+					[-\normalbaselineskip]
+					}
+					\\\hline 
+				\end{tabular}
+			\end{table} 		
+	\end{frame}
+
+\section{Conclusion and future works}
+	\begin{frame}
+	\frametitle{Conclusion}
+	Future research:
+	\begin{itemize}
+		\item Simulation extensions
+		\begin{itemize}
+			\item Combination of incentive instruments
+			\item More complex social interaction
+		\end{itemize}
+		\item Simulation validation
+		\begin{itemize}
+			\item Validating the simulator on real data
+			\item Scalability of results
+		\end{itemize}
+		\item Integration mechanisms
+		\begin{itemize}
+			\item Exploring different techniques to integrate the CP model and the simulator results
+		\end{itemize}
+	\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+      \begin{center}
+        Thank You!\\
+        ndr.borghesi@gmail.com\\
+        \bigskip \bigskip \bigskip \bigskip 
+        \includegraphics[scale=.5]{epolicyLowerLogo}
+      \end{center}
+       
+    \end{frame}
 
 \end{document}
