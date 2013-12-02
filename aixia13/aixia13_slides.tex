@@ -12,11 +12,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fancyhdr}
-\usepackage{graphicx}
+\usepackage{graphicx, subfigure}
 \usepackage[font={small}]{caption}
 \usepackage{eurosym}
 \usepackage{hyphenat}
-\usepackage{tikz}
+
 
 %cartelle contenenti le immagini
 \graphicspath{{/media/sda4/missioni/aixia13/immagini/}}
@@ -57,7 +57,6 @@
 				\item FP7 STREP Project funded under ICT tools for Governance and Policy Modeling.
 				\item AIM: provide decision support systems for policy makers.
 				\item Case study: Emilia-Romagna regional Energy Plan.
-				% \item<1-| alert@2> Case study: Emilia-Romagna regional Energy Plan.
 			\end{itemize}
 			\column{.5\textwidth}
 			\begin{figure}[hbt]
@@ -129,19 +128,6 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}
-	\frametitle{Regional Planning with \clpr}
-		\begin{itemize}
-			\item Activities are decision vars with bounds: $ \forall i, L_i \leq a_i \leq U_i $
-			\item Activities have a cost $c$ constrained by a budget $$ \sum_i c_i a_i \leq B $$
-			\item Primary activities should produce a minimum amount of energy $$ \sum_{i \in A^P} e_i a_i \geq E_{plan}$$
-			\item In order to implements primary ones, other activities are necessary $$ \forall j \in A^S, a_j = \sum_{i \in A^P} d_{ij} a_i  $$
-			\begin{itemize}
-				\item secondary activities may also have impact on the environment!
-			\end{itemize}
-		\end{itemize}
-	\end{frame}
-
 
 \subsection{Implementation phase}
 	\begin{frame}
@@ -178,10 +164,148 @@
 		\end{itemize}
 		\end{block}
 	\end{frame}
+		
+  	
+\section{Simulation Model}
+	  	
+  	\begin{frame}
+	\frametitle{Agent-based model}
+	Two types of agents:
+		\begin{itemize}
+		\item The Region - provides regional incentives on top of national ones to foster the installation of PV panels	
+		\item House owners - perform a feasibility study, decide if the investment is profitable from an economic point of view
+			\begin{itemize}
+			\item Agent parameters: surface of roof, budget, energy consumption, obstinacy..
+			\item Global parameters: price of electricity, average cost of PV plants, yearly increase of energy prices, national and regional subsidies..
+			\end{itemize}
+		\end{itemize}
+  	\end{frame}
+  	
+  	\begin{frame}
+	\frametitle{Economic aspects are not enough..}
+	 \begin{columns}
+		\column{.6\textwidth}
+		\begin{figure}[hbt]
+			\subfigure[KW of installed PV power in Emilia-Romagna]{
+            \label{fig:kw_ER}
+            \includegraphics[width=0.7\textwidth]{kw_ER} 
+            }\\
+			\subfigure[Italian national feed-in tariffs prices, in \euro/kWh]{
+            \label{fig:national_inc}
+            \includegraphics[width=0.7\textwidth]{national_inc} 
+            }
+	  	\end{figure}
+	  	\column{.4\textwidth}
+	  		  	If the decision to install a PV panel was a purely economic choice, one would expect that the better incentive tariffs the more power installed
+	  	\begin{block}{}
+	  	Non-economic aspects must be considered to understand the relationship between incentives given and the installed PV power
+	  	\end{block}
+	  \end{columns}
+  	\end{frame}
+  	
+  	\begin{frame}
+  	\frametitle{Agents decision algorithm}
+  		\begin{columns}
+  			\column{.6\textwidth}
+		  	\begin{figure}[hbt]
+		  	\centering
+					\includegraphics[scale=0.22]{decisionAlgorithm}
+					\label{decisionAlgorithm}
+		  	\end{figure}
+		  	\column{.4\textwidth}
+		  	\begin{itemize}
+		  	\item Feasibility study - physical/financial constraints
+		  	\item ROE estimation
+		  	\item Social iteration - neighbours behaviour
+		  	\item Knowledge diffusion - not every one who would install a panel knows about PV tech possibilities
+		  	\end{itemize}
+		\end{columns}
+  	\end{frame}
+  	
+\subsection{Parameters influence}
+	\begin{frame}
+	\frametitle{Parameters influence}
+		\begin{itemize}
+			\item We wanted to recognize which are the factors with the greatest impact on the agents
+			\item We ran several simulations varying the independent parameters in their valid ranges one at a time and keeping fixed the remaining ones
+		\end{itemize}
+		\begin{block}<2->{}
+		The parameters with greater influence on the results are those related to the social aspect of the simulation, together with the knowledge diffusion and the minimum ROE expected; the parameters related to PV technologies shown smaller effect
+		\end{block}
+	\end{frame}
 	
+	\begin{frame}
+	\frametitle{Social interaction radius}
+		\begin{columns}
+  			\column{.6\textwidth}
+			\begin{figure}
+			\includegraphics[scale=0.4]{radius_influence}
+			\end{figure}
+			\column{.4\textwidth}
+			\begin{itemize}
+				\item An agent chooses to install a PV panel also depending on the behaviour of his neighbours
+				\item The neighbourhood is defined as a circle of the simulation world
+			\end{itemize}
+		\end{columns}
+	\end{frame}
 	
+	\begin{frame}
+	\frametitle{PV panel price decrease}
+		\begin{columns}
+  			\column{.6\textwidth}
+			\begin{figure}
+			\includegraphics[scale=0.4]{pv_price_redux_influence}
+			\end{figure}
+			\column{.4\textwidth}
+			\begin{itemize}
+				\item The PV panels costs decrease due to technological advancements
+				\item Expressed as a percentage
+			\end{itemize}
+		\end{columns}
+	\end{frame}
+  	
+  	\begin{frame}
+	\frametitle{Starting knowledge diffusion}
+		\begin{columns}
+  			\column{.7\textwidth}
+			\begin{figure}
+			\includegraphics[scale=0.4]{know_diff_lin_2coeff_start_influence}
+			\end{figure}
+			\column{.3\textwidth}
+			\begin{itemize}
+				\item The knowledge diffusion represents the percentage of agents who are aware of PV technology
+				\item Defined by the initial percentage and the yearly increase
+			\end{itemize}
+		\end{columns}
+	\end{frame}
+	
+\subsection{Parameters Tuning}
+	\begin{frame}
+	\frametitle{Parameters Fine Tuning}
+		\begin{itemize}
+			\item After evaluating the parameters with greater influence, we want to fine tune them considering the regional data from the past
+			\item The purpose is to obtain a simulator able to forecast future trends
+			\item We are currently using a tool called \emph{irace}\footnotemark to obtain an automatic optimal configuration for the most important parameters
+		\end{itemize}
+		\footnotetext[1]{Manuel López-Ibáñez, Jérémie Dubois-Lacoste, Thomas Stützle, and Mauro Birattari. The irace package, Iterated Race for Automatic Algorithm Configuration. Technical Report TR/IRIDIA/2011-004, IRIDIA, Université libre de Bruxelles, Belgium, 2011}
+	\end{frame}
+	
+	\begin{frame}
+	\frametitle{Parameters Fine Tuning - First results}
+		\begin{columns}
+  			\column{.3\textwidth}
+  			\begin{itemize}
+  				\item The simulated trend follows the kW installed real data
+  				\item There's still a lot of work to do..
+  			\end{itemize}
+  			\column{.7\textwidth}
+  			\begin{figure}
+			\includegraphics[scale=0.4]{optSim_vs_realData}
+			\end{figure}
+  		\end{columns}
+	\end{frame}
  	
-	\section{Conclusion and future works}
+\section{Conclusion and future works}
 	
 	\begin{frame}
 	\frametitle{Conclusion}
@@ -191,6 +315,7 @@
 		\begin{itemize}
 			\item Combination of incentive instruments
 			\item More complex social interaction
+			\item Agents decisions based on forecasts about PV tech
 		\end{itemize}
 		\item Simulation validation
 		\begin{itemize}
